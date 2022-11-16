@@ -6,22 +6,29 @@ $( document ).ready(function() {
             console.log ("adentro del get"); //test
             console.log (data[1]["userName"]);
             let i = 0; // init en 0
-            console.log(data[i]["id"]);
+            console.log(data[i]["id"]); //test
             for (i = 0; i < data.length; i++)
             {   
                 $("#result").append(data[i]["id"]); //el object id esta ok pero no graficaba porq con data solo no trae todo el json es necesario poner por partes asi
             
             }
-           
-           // trae todos los usuarios al hacer clic 
-            $("#btnallusers").click(function(){
-                let z = 0;
-                for (z = 0; z < data.length; z++)
-                {
-                    $("#listini").append('<li> Id: ' + data[z]["id"] + '</li>' + '<li> UserName: ' + data[z]["userName"] + '</li>' + '<li> FirstName: ' + data[z]["firstName"] + '</li>'); //en otro div pero en forma de list
 
+            let activador = 0; // para que no traiga la info denuevo cuando apretas btnalluser
+           // boton para todos los usuarios
+            $("#btnallusers").click(function(){
+                $("#listini").toggle();
+                let z = 0;
+                if (activador == 0)
+                {
+                    for (z = 0; z < data.length; z++)
+                        {
+                            $("#listini").append('<li> Id: ' + data[z]["id"] + '</li>' + '<li> UserName: ' + data[z]["userName"] + '</li>' + '<li> FirstName: ' + data[z]["firstName"] + '</li>'); //en otro div pero en forma de list
+                            activador++;
+                        }
                 }
             });
+            
+            
            // post un User
            $("#btnpostuser").click(function()
            {
@@ -32,7 +39,7 @@ $( document ).ready(function() {
                  processData: false,
                 'contentType': 'application/json',
                 'data':JSON.stringify({
-                    "id":5,
+                    "id":9,
                     "UserName":"testfront",
                     "FirstName":"testfront",
                     "LastName":"testfront",

@@ -31,72 +31,29 @@ $( document ).ready(function()
                 }
             });
            // post un User
-           //$("#btnpostuser").click(function()
-            //{
-                //$("#postuserform").toggle();
-                $("form").submit(function (event) 
+           $("#btnpostuser").click(function()
+            {
+                
+                $.ajax(
                 {
-                    var formData = {
-                      Id: $("#userId").val(),
-                      UserName: $("#userName").val(),
-                      FirstName: $("#firstName").val(),
-                      LastName: $("#lastName").val(),
-                      Country: $("#country").val(),
-                      State: $("#state").val(),
-                      City: $("#city").val(),
-                    };
-                    $.ajax({
                     'url':'https://localhost:7233/api/AddUser',
                     'method':'POST',
-                    'data': 'formData',
-
                     'dataType': 'json',
                     processData: false,
                     'contentType': 'application/json',
-                //    'data':JSON.stringify({
-                //    "id":10,
-                //    "UserName":"dmaradona",
-                //    "FirstName":"Diego",
-                //    "LastName":"Maradona",
-                //    "Country":"Argentina",
-                //    "State":"CABA",
-                //    "City":"VillaFiorito"
-                // }),
-                // //'success': getHandlingStatus
-                    });
-                
-                    //$.ajax({
-                    //  type: "POST",
-                    //  url: "https://localhost:7233/api/AddUser",
-                    //  data: formData,
-                    //  dataType: "json",
-                    //  contentType:'application/json', //agregado para probar
-                    //  encode: true,
-                    //}).done(function (data) 
-                    //{
-                    //  console.log(data);
-                    //});
-                
-                    event.preventDefault();
+                    'data':JSON.stringify(
+                        {
+                            "id":116,
+                            "UserName":"zdmaradona",
+                            "FirstName":"Diego",
+                            "LastName":"Maradona",
+                            "Country":"Argentina",
+                            "State":"CABA",
+                            "City":"VillaFiorito"
+                        }),
                 });
-           // });
+                    //'success': getHandlingStatus
                 
-                //$.ajax({
-                //'url':'https://localhost:7233/api/AddUser',
-                //'method':'POST',
-                //'dataType': 'json',
-                // processData: false,
-                //'contentType': 'application/json',
-                //'data':JSON.stringify({
-                //    "id":10,
-                //    "UserName":"dmaradona",
-                //    "FirstName":"Diego",
-                //    "LastName":"Maradona",
-                //    "Country":"Argentina",
-                //    "State":"CABA",
-                //    "City":"VillaFiorito"
-                // }),
-                // //'success': getHandlingStatus
-                //});
-    }); 
+            });
+    });
 });

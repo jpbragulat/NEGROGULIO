@@ -12,28 +12,30 @@ $( document ).ready(function()
             for (i = 0; i < data.length; i++)
             {   
                 $("#result").append(data[i]["id"]); //el object id esta ok pero no graficaba porq con data solo no trae todo el json es necesario poner por partes asi
-            
+
             }
 
-            let activador = 0; // para que no traiga la info denuevo cuando apretas btnalluser
+            let activador = false; // para que no traiga la info denuevo cuando apretas btnalluser
            // boton para todos los usuarios
-            $("#btnallusers").click(function()
-            {
-                $("#listini").toggle();
+            $("#btnallusers").click(function(){
+                
                 let z = 0;
-                if (activador == 0)
+                if (!activador) //esta cabezada se llama flag - deberia ser BOOL TRUE or FALSE
                 {
                     for (z = 0; z < data.length; z++)
-                        {
-                            $("#listini").append('<li> Id: ' + data[z]["id"] + '</li>' + '<li> UserName: ' + data[z]["userName"] + '</li>' + '<li> FirstName: ' + data[z]["firstName"] + '</li>'); //en otro div pero en forma de list
-                            activador++;
-                        }
+                    {
+                        $("#listini").append('<li> Id: ' + data[z]["id"] + '</li>' + '<li> UserName: ' + data[z]["userName"] + '</li>' + '<li> FirstName: ' + data[z]["firstName"] + '</li>'); //en otro div pero en forma de list
+                    }
+                    activador = true;  
                 }
+                $("#listini").toggle();
+                    
+
             });
            // post un User
-           $("#btnpostuser").click(function()
+           $("#buttonSubmit").click(function()
             {
-                
+                var usernameForm = $("#userName").val();
                 $.ajax(
                 {
                     'url':'https://localhost:7233/api/AddUser',
@@ -43,14 +45,19 @@ $( document ).ready(function()
                     'contentType': 'application/json',
                     'data':JSON.stringify(
                         {
-                            "id":116,
-                            "UserName":"zdmaradona",
-                            "FirstName":"Diego",
+                            "UserName":usernameForm,
+                            "FirstName": "zaz",
                             "LastName":"Maradona",
                             "Country":"Argentina",
                             "State":"CABA",
                             "City":"VillaFiorito"
                         }),
+                        success: function(msg){
+                            alert( "Data Saved: " + msg );
+                      },
+                      error: function(XMLHttpRequest, textStatus, errorThrown) {
+                         alert("some error: " + XMLHttpRequest.responseText);
+                      }
                 });
                     //'success': getHandlingStatus
                 

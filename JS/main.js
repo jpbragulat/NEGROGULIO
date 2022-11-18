@@ -4,11 +4,11 @@ $( document ).ready(function()
     console.log( "ready!" );
     $.get( "https://localhost:7233/api/GetAllUsers", function( data ) 
     {
-            console.log (data[0]["id"]); //test
-            console.log ("adentro del get"); //test
-            console.log (data[1]["userName"]);
+            //console.log (data[0]["id"]); //test
+            //console.log ("adentro del get"); //test
+            //console.log (data[1]["userName"]);
             let i = 0; // init en 0
-            console.log(data[i]["id"]); //test
+            //console.log(data[i]["id"]); //test
             for (i = 0; i < data.length; i++)
             {   
                 $("#result").append(data[i]["id"]); //el object id esta ok pero no graficaba porq con data solo no trae todo el json es necesario poner por partes asi
@@ -36,6 +36,12 @@ $( document ).ready(function()
            $("#buttonSubmit").click(function()
             {
                 var usernameForm = $("#userName").val();
+                var firstName = $("#firstName").val();
+                var lastName = $("lastName").val();
+                var country = $("country").val();
+                var state = $("state").val();
+                var city = $("city").val();
+
                 $.ajax(
                 {
                     'url':'https://localhost:7233/api/AddUser',
@@ -46,11 +52,11 @@ $( document ).ready(function()
                     'data':JSON.stringify(
                         {
                             "UserName":usernameForm,
-                            "FirstName": "zaz",
-                            "LastName":"Maradona",
-                            "Country":"Argentina",
-                            "State":"CABA",
-                            "City":"VillaFiorito"
+                            "FirstName":firstName,
+                            "LastName":lastName,
+                            "Country":country,
+                            "State":state,
+                            "City":city
                         }),
                         success: function(msg){
                             alert( "Data Saved: " + msg );

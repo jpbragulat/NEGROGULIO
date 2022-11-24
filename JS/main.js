@@ -64,21 +64,51 @@ $( document ).ready(function()
             });   
         });
         //delete user
+        activador = false;
+        let z = 0;
         $("#btndeluser").click(function(){
-            let z = 0;
+            $("#divuserlist").toggle();
+            
             if (!activador) //esta cabezada se llama flag - deberia ser BOOL TRUE or FALSE
             {
                 for (z = 0; z < data.length; z++)
                 {
-                    $("#deluserlist").append('<li> Id: ' + data[z]["id"] + '</li>' + '<li> UserName: ' + data[z]["userName"] + '</li>' + '<li> FirstName: ' + data[z]["firstName"] + '</li>'); //en otro div pero en forma de list
+                    $("#deluserlist").append('<li> ' + '<button id="btnDel'+ z +'">Del Id "' + z + '"</button>' + '</li>' + '<li> UserName: ' + data[z]["userName"] + '</li>'); //en otro div pero en forma de list
                 }
                 activador = true;  
             }
             
-            $("#deluserlist").toggle();
+            
+            $('[id*="btnDel"]').click(function(){
+                
+                //console.log("entro");
+                //console.log(this.id);
+                let idDelete = this.id.substr(this.id.length - 1);
+                console.log(idDelete);
+
+                $.ajax({
+                    'url':'https://localhost:7233/api/DeleteUserId',
+                    'method':'GET',
+                    'dataType': 'json',
+                    processData: false,
+                    'contentType': 'application/json',
+                    'data':JSON.stringify({
+                        "Id":idDelete,
+                        
+                        }),
+                        success: function(msg){
+                            alert( "Data Saved: " + msg );
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            alert("some error: " + XMLHttpRequest.responseText);
+                        }
+                });
+
+            });
+            
+                
         });
-
-
+            
 
 
 

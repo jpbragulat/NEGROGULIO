@@ -87,15 +87,12 @@ $( document ).ready(function()
                 console.log(idDelete);
 
                 $.ajax({
-                    'url':'https://localhost:7233/api/DeleteUserId',
-                    'method':'GET',
-                    'dataType': 'json',
+                    'url':'https://localhost:7233/api/DeleteUser/' + idDelete,
+                    'method':'DELETE',
                     processData: false,
                     'contentType': 'application/json',
-                    'data':JSON.stringify({
-                        "Id":idDelete,
-                        
-                        }),
+
+    
                         success: function(msg){
                             alert( "Data Saved: " + msg );
                         },

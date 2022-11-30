@@ -28,7 +28,7 @@ $( document ).ready(function()
                 
         // post un User
         $("#btnpostuser").click(function(){
-            $("#formulario").toggle();
+            $("#postuserform").toggle();
             $("#buttonSubmit").click(function(){
                 var usernameForm = $("#userName").val();
                 var firstName = $("#firstName").val();

@@ -8,3 +8,7 @@ body {background-color: black;}
 #deluserlist{
     color: white;
 }
+
+.hidden{
+    display: none;
+ }

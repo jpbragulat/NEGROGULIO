@@ -23,6 +23,95 @@ $( document ).ready(function()
         });    
     });
 
+    $("#btnpostuser").click(function(){
+        $("#postuserform").toggle();
+        $("#buttonSubmit").click(function(){
+            var usernameForm = $("#userName").val();
+            var firstName = $("#firstName").val();
+            var lastName = $("lastName").val();
+            var country = $("country").val();
+            var state = $("state").val();
+            var city = $("city").val();
+            
+            $.ajax({
+                'url':'https://localhost:7233/api/AddUser',
+                'method':'POST',
+                'dataType': 'json',
+                processData: false,
+                'contentType': 'application/json',
+                'data':JSON.stringify({
+                    "UserName":usernameForm,
+                    "FirstName":firstName,
+                    "LastName":lastName,
+                    "Country":country,
+                    "State":state,
+                    "City":city
+                    }),
+                    success: function(msg){
+                        alert( "Data Saved: " + msg );
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert("some error: " + XMLHttpRequest.responseText);
+                    }
+            });
+            //'success': getHandlingStatus
+        });
+        
+        let z = 0;
+        let activador = false;
+        $("#btndeluser").click(function(){
+            
+            $.get("https://localhost:7233/api/GetAllUsers", function( data ){
+            
+                if (!activador)
+                {
+                    for (z = 0; z < data.length; z++)
+                    {
+                        $("#deluserlist").append('<li> ' + '<button id="btnDel'+ z +'">Del Id "' + z + '"</button>' + '</li>' + '<li> UserName: ' + data[z]["userName"] + '</li>'); //en otro div pero en forma de list
+                    }
+                    activador = true;  
+                }
+                $("#divuserlist").toggle();
+            
+                $('[id*="btnDel"]').click(function(){
+                
+                    //console.log("entro");
+                    //console.log(this.id);
+                    let idDelete = this.id.substr(this.id.length - 1);
+                    console.log(idDelete);
+
+                    $.ajax({
+                        'url':'https://localhost:7233/api/DeleteUser/' + idDelete,
+                        'method':'DELETE',
+                        processData: false,
+                        'contentType': 'application/json',
+
+    
+                            success: function(msg){
+                            alert( "Data Saved: " + msg );
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            alert("some error: " + XMLHttpRequest.responseText);
+                            }
+                    });
+                });
+            });
+        });    
+    });
+});
+
+            
+                
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -142,7 +231,7 @@ $( document ).ready(function()
 
 
     });*/
-});
+    //});
                         
 
 

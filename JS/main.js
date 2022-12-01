@@ -2,6 +2,38 @@
 $( document ).ready(function() 
 {
     console.log( "ready!" );
+    var activador = false; //para frenar que cada ves q aprieto el boton para ocultar me vuelva a cargar la lista
+    
+    $("#btnallusers").click(function(){
+        
+        console.log("btnallusers");
+        $.get("https://localhost:7233/api/GetAllUsers", function( data ){
+            
+            let z = 0;
+            if (!activador) //BOOL TRUE or FALSE
+            {
+                for (z = 0; z < data.length; z++)
+                {
+                    $("#listini").append('<li> Id: ' + data[z]["id"] + '</li>' + '<li> UserName: ' + data[z]["userName"] + '</li>' + '<li> FirstName: ' + data[z]["firstName"] + '</li>'); //en otro div pero en forma de list
+                }
+                activador = true;  
+            }
+            
+            $("#listini").toggle();
+        });    
+    });
+
+
+
+
+            
+            
+       
+
+
+
+
+    /*
     $.get( "https://localhost:7233/api/GetAllUsers", function( data ) 
     {
         let i = 0; // init en 0
@@ -109,7 +141,7 @@ $( document ).ready(function()
 
 
 
-    });
+    });*/
 });
                         
 

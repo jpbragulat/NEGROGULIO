@@ -56,20 +56,21 @@ $( document ).ready(function()
             });
             //'success': getHandlingStatus
         });
+    });
         
-        let z = 0;
-        let activador = false;
-        $("#btndeluser").click(function(){
+    let z = 0;
+    let activador_del = false;
+    $("#btndeluser").click(function(){
             
-            $.get("https://localhost:7233/api/GetAllUsers", function( data ){
+        $.get("https://localhost:7233/api/GetAllUsers", function( data ){
             
-                if (!activador)
+                if (!activador_del)
                 {
                     for (z = 0; z < data.length; z++)
                     {
                         $("#deluserlist").append('<li> ' + '<button id="btnDel'+ z +'">Del Id "' + z + '"</button>' + '</li>' + '<li> UserName: ' + data[z]["userName"] + '</li>'); //en otro div pero en forma de list
                     }
-                    activador = true;  
+                    activador_del = true;  
                 }
                 $("#divuserlist").toggle();
             
@@ -87,18 +88,18 @@ $( document ).ready(function()
                         'contentType': 'application/json',
 
     
-                            success: function(msg){
-                            alert( "Data Saved: " + msg );
-                            },
-                            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                            alert("some error: " + XMLHttpRequest.responseText);
-                            }
+                        success: function(msg){
+                        alert( "Data Saved: " + msg );
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert("some error: " + XMLHttpRequest.responseText);
+                        }
                     });
                 });
-            });
-        });    
-    });
+        });
+    });    
 });
+
 
             
                 

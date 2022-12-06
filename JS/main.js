@@ -68,16 +68,18 @@ $( document ).ready(function()
                 {
                     for (z = 0; z < data.length; z++)
                     {
-                        $("#deluserlist").append('<li> ' + '<button id="btnDel'+ z +'">Del Id "' + z + '"</button>' + '</li>' + '<li> UserName: ' + data[z]["userName"] + '</li>'); //en otro div pero en forma de list
+                        $("#deluserlist").append('<li> ' + '<button id="btnDel'+ data[z]["id"] +'">Del Id "' + data[z]["id"] + '"</button>' + '</li>' + '<li> UserName: ' + data[z]["userName"] + '</li>'); //en otro div pero en forma de list
+                        if( )
                     }
                     activador_del = true;  
                 }
-                $("#divuserlist").toggle();
+                //$("#divuserlist").toggle();
             
                 $('[id*="btnDel"]').click(function(){
-                
+                    activador_del = false;
                     //console.log("entro");
                     //console.log(this.id);
+
                     let idDelete = this.id.substr(this.id.length - 1);
                     console.log(idDelete);
 

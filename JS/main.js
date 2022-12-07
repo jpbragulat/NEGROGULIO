@@ -69,18 +69,34 @@ $( document ).ready(function()
                     for (z = 0; z < data.length; z++)
                     {
                         $("#deluserlist").append('<li> ' + '<button id="btnDel'+ data[z]["id"] +'">Del Id "' + data[z]["id"] + '"</button>' + '</li>' + '<li> UserName: ' + data[z]["userName"] + '</li>'); //en otro div pero en forma de list
-                        if( )
+
                     }
                     activador_del = true;  
                 }
-                //$("#divuserlist").toggle();
+                //$("#divuserlist").toggle(); // bugea, hace q salgan dos veces los pedidos de borrar
             
                 $('[id*="btnDel"]').click(function(){
                     activador_del = false;
-                    //console.log("entro");
-                    //console.log(this.id);
-
-                    let idDelete = this.id.substr(this.id.length - 1);
+                    digitCounter = 0;
+                    
+                    for (z = 0; z < this.id.length; z++)
+                    {
+                        if(this.id[z] == '0' || this.id[z] == '1' || this.id[z] == '2' || this.id[z] == '3' || this.id[z] == '4' || this.id[z] == '5' || this.id[z] == '6' || this.id[z] == '7' || this.id[z] == '8' || this.id[z] == '9')
+                        {
+                            digitCounter++;
+                        }
+                    }
+                    console.log(digitCounter);
+                    let idDelete;
+                    idDelete = this.id.substr(this.id.length - digitCounter); // se le restan la cantidad de ultimos chars que te queres llevar del array
+                    /*if (digitCounter == 1)
+                    {
+                        idDelete = this.id.substr(this.id.length - 1);
+                    }
+                    else {
+                        idDelete = this.id.substr(this.id.length - 2);
+                    }
+                    */
                     console.log(idDelete);
 
                     $.ajax({
@@ -97,9 +113,96 @@ $( document ).ready(function()
                         alert("some error: " + XMLHttpRequest.responseText);
                         }
                     });
-                });
+               });
         });
-    });    
+    });
+    
+    
+    let activadorUpdate = false;
+    $("#btnUpdateUser").click(function(){
+        $.get("https://localhost:7233/api/GetAllUsers", function( data ){
+            
+                if (!activadorUpdate)
+                {
+                    for (z = 0; z < data.length; z++)
+                    {
+                        $("#divUserUpdateList").append('<li> ' + '<button id="btnUpdate'+ data[z]["id"] +'">Update Id "' + data[z]["id"] + '"</button>' + '</li>' + '<li> UserName: ' + data[z]["userName"] + '</li>'); //en otro div pero en forma de list
+
+                    }
+                    activadorUpdate = true;  
+                }
+                //$("#divuserlist").toggle(); // bugea, hace q salgan dos veces los pedidos de borrar
+            
+                $('[id*="btnUpdate"]').click(function(){
+                    activadorUpdate = false;
+                    digitCounter = 0;
+                    
+                    for (z = 0; z < this.id.length; z++)
+                    {
+                        if(this.id[z] == '0' || this.id[z] == '1' || this.id[z] == '2' || this.id[z] == '3' || this.id[z] == '4' || this.id[z] == '5' || this.id[z] == '6' || this.id[z] == '7' || this.id[z] == '8' || this.id[z] == '9')
+                        {
+                            digitCounter++;
+                        }
+                    }
+                    console.log(digitCounter);
+                    let idUpdate;
+                    idUpdate = this.id.substr(this.id.length - digitCounter);
+                    console.log(idUpdate);
+                    console.log(data[idUpdate]["userName"]);
+                    $("#updateUserForm").toggle();
+                    $("#result").append("#updateUserForm");
+                    
+                    //mostrando valores actuales en el form
+                    $("#userId").val(idUpdate);
+                    $("#userName").val(data[idUpdate]["userName"]);
+                    //termina mostrando valores actuales en el form
+
+                    $("#buttonSubmit").click(function(){
+                        var usernameForm = $("#userName").val();
+                        var firstName = $("#firstName").val();
+                        var lastName = $("lastName").val();
+                        var country = $("country").val();
+                        var state = $("state").val();
+                        var city = $("city").val();
+                        
+                        $.ajax({
+                            'url':'https://localhost:7233/api/AddUser',
+                            'method':'POST',
+                            'dataType': 'json',
+                            processData: false,
+                            'contentType': 'application/json',
+                            'data':JSON.stringify({
+                                "UserName":usernameForm,
+                                "FirstName":firstName,
+                                "LastName":lastName,
+                                "Country":country,
+                                "State":state,
+                                "City":city
+                                }),
+                                success: function(msg){
+                                    alert( "Data Saved: " + msg );
+                                },
+                                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                    alert("some error: " + XMLHttpRequest.responseText);
+                                }
+                        });
+                        //'success': getHandlingStatus
+                    });
+
+
+
+
+
+
+                    //
+                });
+        });        
+
+
+
+    });
+    
+
 });
 
 

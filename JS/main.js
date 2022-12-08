@@ -57,7 +57,9 @@ $( document ).ready(function()
             //'success': getHandlingStatus
         });
     });
-        
+    
+    //Delete User
+    //
     let z = 0;
     let activador_del = false;
     $("#btndeluser").click(function(){
@@ -117,7 +119,8 @@ $( document ).ready(function()
         });
     });
     
-    
+    //Update User
+    //
     let activadorUpdate = false;
     $("#btnUpdateUser").click(function(){
         $.get("https://localhost:7233/api/GetAllUsers", function( data ){
@@ -145,8 +148,10 @@ $( document ).ready(function()
                         }
                     }
                     console.log(digitCounter);
+                    //guarda en idUpdate los digitos que corresponden al ID
                     let idUpdate;
                     idUpdate = this.id.substr(this.id.length - digitCounter);
+                    //
                     console.log(idUpdate);
                     console.log(data[idUpdate]["userName"]);
                     $("#updateUserForm").toggle();
@@ -166,12 +171,13 @@ $( document ).ready(function()
                         var city = $("city").val();
                         
                         $.ajax({
-                            'url':'https://localhost:7233/api/AddUser',
-                            'method':'POST',
+                            'url':'https://localhost:7233/api/UpdateUser',
+                            'method':'PUT',
                             'dataType': 'json',
                             processData: false,
                             'contentType': 'application/json',
                             'data':JSON.stringify({
+                                "Id":idUpdate, //es la var que tengo de antes
                                 "UserName":usernameForm,
                                 "FirstName":firstName,
                                 "LastName":lastName,

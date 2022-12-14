@@ -23,15 +23,18 @@ $( document ).ready(function()
         });    
     });
 
+    //Post User
+    //
     $("#btnpostuser").click(function(){
         $("#postuserform").toggle();
-        $("#buttonSubmit").click(function(){
+        $("#buttonSubmitPost").click(function(){
             var usernameForm = $("#userName").val();
             var firstName = $("#firstName").val();
-            var lastName = $("lastName").val();
-            var country = $("country").val();
-            var state = $("state").val();
-            var city = $("city").val();
+            var lastName = $("#lastName").val();
+            var country = $("#country").val();
+            var state = $("#state").val();
+            var city = $("#city").val();
+            
             
             $.ajax({
                 'url':'https://localhost:7233/api/AddUser',
